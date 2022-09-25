@@ -16,5 +16,7 @@ lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings
   libraryDependencies ++= dependencies,
   Compile / mainClass := Some("com.testingzone.neo4j.Main"),
   nativeImageOptions += "--no-fallback",
+  nativeImageOptions += "-H:IncludeResources=logback.xml",
+  nativeImageOptions += s"-H:ReflectionConfigurationFiles=${baseDirectory.value}/reflection/logback.json",
   nativeImageVersion := "22.1.0"
 )
