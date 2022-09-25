@@ -5,7 +5,7 @@ val dependencies = Seq(
   "org.typelevel" %% "cats-effect" % "3.3.14",
   "is.cir" %% "ciris" % "2.4.0",
   "org.typelevel" %% "log4cats-slf4j" % "2.5.0",
-  "org.slf4j" % "slf4j-jdk14" % "2.0.2"
+  "ch.qos.logback" % "logback-classic" % "1.4.1"
 )
 
 lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings(
