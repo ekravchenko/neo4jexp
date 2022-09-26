@@ -8,7 +8,10 @@ val dependencies = Seq(
   "ch.qos.logback" % "logback-classic" % "1.4.1",
   "io.github.neotypes" %% "neotypes-cats-effect" % "0.22.0",
   "io.github.neotypes" %% "neotypes-generic" % "0.22.0",
-  "org.neo4j.driver" % "neo4j-java-driver" % "4.4.9"
+  "org.neo4j.driver" % "neo4j-java-driver" % "4.4.9",
+  "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.1.1",
+  "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.1.1",
+  "org.http4s" %% "http4s-blaze-server" % "0.23.12"
 )
 
 lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings(
