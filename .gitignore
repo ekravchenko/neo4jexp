@@ -34,3 +34,6 @@ target/
 
 # general
 *.class
+
+# graalvm
+native
