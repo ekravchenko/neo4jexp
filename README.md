@@ -7,6 +7,7 @@ Use latest technologies in Scala stack to work with neo4j
 - [Neotypes](https://neotypes.github.io/neotypes/) - lightweight, type-safe, functional way to work with neo4j
 - [Tapir](https://tapir.softwaremill.com/en/latest/server/http4s.html) - describe HTTP API endpoints as immutable Scala values
 - [Http4s](https://http4s.org/) - functional HTTP server for scala
+- [fs2-kafka](https://fd4s.github.io/fs2-kafka/docs/consumers) - functional Kafka consumers
 
 _Stack above is fully compliant with GraalVM native compilation_
 
@@ -15,12 +16,15 @@ Using command `sbt nativeImage` http server can be compiled into native binary. 
 
 # How to run
 - neo4j db should be up and running
+- kafka should be up and running, and `test` topic should be created
 - neo4j db should have `Person` nodes with `name` and `surname`
 - create environment variables:
-    - `neo4j_host` host address
-    - `neo4j_port` port (to connect via bolt)
-    - `neo4j_user` user
-    - `neo4j_password` password
+    - `neo4j_host` host address of Neo4j
+    - `neo4j_port` port (to connect via bolt) of Neo4j
+    - `neo4j_user` Neo4j user
+    - `neo4j_password` Neo4j password
+    - `kafka_host` Kafka host
+    - `kafka_port` Kafka port
 
 # Docker
 Native image can be built using Docker multi stage build via command
