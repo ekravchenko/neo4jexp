@@ -33,7 +33,12 @@ docker run -d -p 8090:8090 \
         -e neo4j_host=docker.for.mac.localhost \
         -e neo4j_port=7687 -e neo4j_user=neo4j \
         -e neo4j_password=test \
-        --name neo4jexp  neo4jexp
+        --name neo4jexp neo4jexp
+```
+
+Base image for this docker build is really small `ubi8-minimal` if something extra is needed (for example `ps`) use command below:
+```
+microdnf update && microdnf install procps
 ```
 
 
