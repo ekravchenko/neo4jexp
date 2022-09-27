@@ -4,5 +4,5 @@ case class HttpConfig(host: String, port: Int)
 
 object HttpConfig {
 
-  def default: HttpConfig = HttpConfig("localhost", 8090)
+  def default: HttpConfig = HttpConfig("0.0.0.0", 8090)
 }
