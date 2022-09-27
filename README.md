@@ -7,7 +7,7 @@ Use latest technologies in Scala stack to work with neo4j
 - [Neotypes](https://neotypes.github.io/neotypes/) - lightweight, type-safe, functional way to work with neo4j
 - [Tapir](https://tapir.softwaremill.com/en/latest/server/http4s.html) - describe HTTP API endpoints as immutable Scala values
 - [Http4s](https://http4s.org/) - functional HTTP server for scala
-- [fs2-kafka](https://fd4s.github.io/fs2-kafka/docs/consumers) - functional Kafka consumers
+- [fs2-kafka](https://fd4s.github.io/fs2-kafka/docs/consumers) - functional Kafka consumers & producers
 
 _Stack above is fully compliant with GraalVM native compilation_
 

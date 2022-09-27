@@ -2,11 +2,12 @@ package com.testingzone.neo4j
 
 import cats.effect.{ExitCode, IO, IOApp, Resource}
 import com.testingzone.neo4j.config.{HttpConfig, KafkaConfig, Neo4jConfig}
-import com.testingzone.neo4j.endpoint.PersonEndpoint
+import com.testingzone.neo4j.endpoint.{KafkaEndpoint, PersonEndpoint}
 import com.testingzone.neo4j.handler.EventHandler
+import com.testingzone.neo4j.publisher.KafkaSimplePublisher
 import com.testingzone.neo4j.repository.neo4j.Neo4jPersonRepository
-import com.testingzone.neo4j.service.PersonService
-import fs2.kafka.{AutoOffsetReset, ConsumerSettings, KafkaConsumer, commitBatchWithin}
+import com.testingzone.neo4j.service.{KafkaService, PersonService}
+import fs2.kafka._
 import neotypes.GraphDatabase
 import neotypes.cats.effect.implicits._
 import org.http4s.blaze.server.BlazeServerBuilder
@@ -25,11 +26,15 @@ object Main extends IOApp {
       httpConfig = HttpConfig.default
       logger <- Resource.eval(Slf4jLogger.create[IO])
       driver <- GraphDatabase.driver[IO](s"bolt://${neo4jConfig.host}:${neo4jConfig.port}", AuthTokens.basic(neo4jConfig.user, neo4jConfig.password))
-      repository = new Neo4jPersonRepository(driver)
-      service = new PersonService(repository)
-      endpoint = new PersonEndpoint(service)
+      producer <- KafkaProducer.resource(ProducerSettings[IO, String, String].withBootstrapServers(s"${kafkaConfig.host}:${kafkaConfig.port}"))
+      publisher = new KafkaSimplePublisher(producer, kafkaConfig.testTopic.name)
+      personRepository = new Neo4jPersonRepository(driver)
+      personService = new PersonService(personRepository)
+      kafkaService = new KafkaService(publisher)
+      personEndpoint = new PersonEndpoint(personService)
+      kafkaEndpoint = new KafkaEndpoint(kafkaService)
       _ <- Resource.eval(logger.info(s"Starting up http4s blaze"))
-      routes = Http4sServerInterpreter[IO]().toRoutes(endpoint.getPersonsEndpoint)
+      routes = Http4sServerInterpreter[IO]().toRoutes(List(personEndpoint.getPersonsEndpoint, kafkaEndpoint.postToKafkaEndpoint))
       _ <- BlazeServerBuilder[IO]
         .withExecutionContext(scala.concurrent.ExecutionContext.Implicits.global)
         .bindHttp(httpConfig.port, httpConfig.host)
