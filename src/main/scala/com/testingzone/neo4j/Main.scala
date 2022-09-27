@@ -27,7 +27,7 @@ object Main extends IOApp {
       logger <- Resource.eval(Slf4jLogger.create[IO])
       driver <- GraphDatabase.driver[IO](s"bolt://${neo4jConfig.host}:${neo4jConfig.port}", AuthTokens.basic(neo4jConfig.user, neo4jConfig.password))
       producer <- KafkaProducer.resource(ProducerSettings[IO, String, String].withBootstrapServers(s"${kafkaConfig.host}:${kafkaConfig.port}"))
-      publisher = new KafkaSimplePublisher(producer, kafkaConfig.testTopic.name)
+      publisher = new KafkaSimplePublisher(producer, kafkaConfig.testTopic)
       personRepository = new Neo4jPersonRepository(driver)
       personService = new PersonService(personRepository)
       kafkaService = new KafkaService(publisher)
@@ -48,11 +48,11 @@ object Main extends IOApp {
     } yield (logger, kafkaConfig, consumer, handler)).use {
       case (logger, kafkaConfig, consumer, handler) =>
         (for {
-          _ <- consumer.subscribeTo(kafkaConfig.testTopic.name)
-          _ <- logger.info(s"Subscribed to Kafka topic [${kafkaConfig.testTopic.name}]")
+          _ <- consumer.subscribeTo(kafkaConfig.testTopic)
+          _ <- logger.info(s"Subscribed to Kafka topic [${kafkaConfig.testTopic}]")
           _ <- consumer.stream
-            .mapAsync(kafkaConfig.testTopic.partitions) { msg => handler.handle(msg.record).as(msg.offset) }
-            .through(commitBatchWithin(kafkaConfig.offsetCommitConfig.batchSize, kafkaConfig.offsetCommitConfig.interval))
+            .mapAsync(20) { msg => handler.handle(msg.record).as(msg.offset) }
+            .through(commitBatchWithin(kafkaConfig.offsetConfig.batchSize, kafkaConfig.offsetConfig.interval))
             .compile
             .drain
         } yield ()).as(ExitCode.Success)
