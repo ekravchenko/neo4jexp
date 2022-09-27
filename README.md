@@ -34,16 +34,31 @@ docker build -t neo4jexp .
 To run container use command below
 ```
 docker run -d -p 8090:8090 \
-        -e neo4j_host=docker.for.mac.localhost \
-        -e neo4j_port=7687 -e neo4j_user=neo4j \
+        -e neo4j_host=neo4j \
+        -e neo4j_port=7687 \
+        -e neo4j_user=neo4j \
         -e neo4j_password=test \
+        -e kafka_host=kafka \
+        -e kafka_port=9092 \
+        --network=neo4jexp_default \
+        --memory=20m \
         --name neo4jexp neo4jexp
 ```
+Please note that `--memory=20m` forces Docker container to use `20 megabytes` only. This is done on purpose - it shows
+that native application inside container can start successfully. 
+However, this does not prove that it will run stable under load. Using simple apache benchmark command `20 megabytes` container
+was crashed -> `ab -n 1000 -c 100 http://localhost:8090/persons`. (Updating limit to `30m` makes container stable)
 
 Base image for this docker build is really small `ubi8-minimal` if something extra is needed (for example `ps`) use command below:
 ```
 microdnf update && microdnf install procps
 ```
 
-
+# TODO
+- `Main` object layout needs to be reviewed and standardized
+- Kafka consumers code could be simplified, maybe we could create some helpers
+- Kafka retry logic needs to be re-implemented
+- Kafka deserialization issues crush the whole server - better if broken message is just isolated and processing continues
+- Need to define correct rules when `mapAsync` (a.k.a `parEvalMap`) vs `evalMap` should be used when processing streams in
+Kafka consumers
 
