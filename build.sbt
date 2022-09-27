@@ -11,7 +11,8 @@ val dependencies = Seq(
   "org.neo4j.driver" % "neo4j-java-driver" % "4.4.9",
   "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.1.1",
   "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.1.1",
-  "org.http4s" %% "http4s-blaze-server" % "0.23.12"
+  "org.http4s" %% "http4s-blaze-server" % "0.23.12",
+  "com.github.fd4s" %% "fs2-kafka" % "3.0.0-M9"
 )
 
 lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings(
@@ -20,6 +21,6 @@ lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings
   Compile / mainClass := Some("com.testingzone.neo4j.Main"),
   nativeImageOptions += "--no-fallback",
   nativeImageOptions += "-H:IncludeResources=logback.xml",
-  nativeImageOptions += s"-H:ReflectionConfigurationFiles=${baseDirectory.value}/reflection/logback.json",
+  nativeImageOptions += s"-H:ReflectionConfigurationFiles=${baseDirectory.value}/reflection/logback.json,${baseDirectory.value}/reflection/kafka.json",
   nativeImageVersion := "22.1.0"
 )
