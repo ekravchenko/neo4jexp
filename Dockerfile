@@ -28,4 +28,4 @@ RUN sbt nativeImage -Dnative-image-installed=true
 FROM redhat/ubi8-minimal:latest
 COPY --from=builder /workdir/neo4jexp/target/native-image/neo4jexp neo4jexp
 EXPOSE 8090
-ENTRYPOINT ["./neo4jexp"]
+ENTRYPOINT ["./neo4jexp", "-XX:MaximumHeapSizePercent=75"]
