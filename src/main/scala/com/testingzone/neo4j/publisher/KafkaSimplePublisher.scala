@@ -1,10 +1,11 @@
 package com.testingzone.neo4j.publisher
 
-import cats.effect.IO
+import cats.Functor
+import cats.syntax.functor._
 import fs2.kafka.{KafkaProducer, ProducerRecord, ProducerRecords}
 
-class KafkaSimplePublisher(producer: KafkaProducer[IO, String, String], topic: String) extends SimplePublisher {
+class KafkaSimplePublisher[F[_] : Functor](producer: KafkaProducer[F, String, String], topic: String) extends SimplePublisher[F] {
 
-  override def publish(key: String, value: String): IO[Unit] =
+  override def publish(key: String, value: String): F[Unit] =
     producer.produce(ProducerRecords.one(ProducerRecord(topic, key, value))).void
 }

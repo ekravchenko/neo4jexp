@@ -1,9 +1,8 @@
 package com.testingzone.neo4j.repository
 
-import cats.effect.IO
 import com.testingzone.neo4j.domain.Person
 
-trait PersonRepository {
+trait PersonRepository[F[_]] {
 
-  def findAll(): IO[Vector[Person]]
+  def findAll(): F[Vector[Person]]
 }

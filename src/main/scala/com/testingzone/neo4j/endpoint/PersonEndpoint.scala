@@ -1,6 +1,7 @@
 package com.testingzone.neo4j.endpoint
 
-import cats.effect.IO
+import cats.Functor
+import cats.syntax.functor._
 import cats.syntax.either._
 import com.testingzone.neo4j.endpoint.json.PersonResponse
 import com.testingzone.neo4j.endpoint.json.PersonResponse.PersonVectorOps
@@ -11,7 +12,7 @@ import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe._
 
 //noinspection TypeAnnotation
-class PersonEndpoint(service: PersonService) {
+class PersonEndpoint[F[_] : Functor](service: PersonService[F]) {
 
   val getPersonsApi = endpoint
     .get
@@ -19,5 +20,5 @@ class PersonEndpoint(service: PersonService) {
     .out(jsonBody[Vector[PersonResponse]])
 
   val getPersonsEndpoint =
-    getPersonsApi.serverLogic[IO](_ => service.findAll().map(_.toResponse.asRight))
+    getPersonsApi.serverLogic[F](_ => service.findAll().map(_.toResponse.asRight))
 }

@@ -1,15 +1,18 @@
 package com.testingzone.neo4j.service
 
-import cats.effect.IO
+import cats.FlatMap
+import cats.syntax.flatMap._
+import cats.syntax.functor._
 import com.testingzone.neo4j.publisher.SimplePublisher
-import org.typelevel.log4cats.slf4j.Slf4jLogger
+import org.typelevel.log4cats.{Logger, LoggerFactory}
 
-class KafkaService(publisher: SimplePublisher) {
+class KafkaService[F[_] : LoggerFactory : FlatMap](publisher: SimplePublisher[F]) {
 
-  def publish(key: String, value: String): IO[Unit] =
+  implicit val logger: Logger[F] = LoggerFactory[F].getLogger
+
+  def publish(key: String, value: String): F[Unit] =
     for {
-      logger <- Slf4jLogger.create[IO]
-      _ <- logger.info(s"Publishing Key=[$key] Value=[$value] to Kafka")
+      _ <- logger.info("Publishing Key=[$key] Value=[$value] to Kafka")
       result <- publisher.publish(key, value)
     } yield result
 }

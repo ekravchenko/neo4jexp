@@ -1,8 +1,6 @@
 package com.testingzone.neo4j.publisher
 
-import cats.effect.IO
+trait SimplePublisher[F[_]] {
 
-trait SimplePublisher {
-
-  def publish(key: String, value: String): IO[Unit]
+  def publish(key: String, value: String): F[Unit]
 }
