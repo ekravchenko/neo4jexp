@@ -15,6 +15,8 @@ val dependencies = Seq(
   "com.github.fd4s" %% "fs2-kafka" % "3.0.0-M9"
 )
 
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+
 lazy val root = (project in file(".")).enablePlugins(NativeImagePlugin).settings(
   name := "neo4jexp",
   libraryDependencies ++= dependencies,
