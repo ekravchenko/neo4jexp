@@ -8,7 +8,7 @@ import org.typelevel.log4cats.{Logger, LoggerFactory}
 
 class KafkaService[F[_] : LoggerFactory : FlatMap](publisher: SimplePublisher[F]) {
 
-  implicit val logger: Logger[F] = LoggerFactory[F].getLogger
+  private implicit val logger: Logger[F] = LoggerFactory[F].getLogger
 
   def publish(key: String, value: String): F[Unit] =
     for {

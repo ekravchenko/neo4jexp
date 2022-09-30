@@ -1,17 +1,13 @@
 package com.testingzone.neo4j.handler
 
-import cats.effect.Sync
-import cats.syntax.flatMap._
-import cats.syntax.functor._
 import fs2.kafka.ConsumerRecord
-import org.typelevel.log4cats.slf4j.Slf4jLogger
+import org.typelevel.log4cats.syntax._
+import org.typelevel.log4cats.{Logger, LoggerFactory}
 
-class EventHandler[F[_] : Sync] {
+class EventHandler[F[_] : LoggerFactory] {
 
-  def handle(record: ConsumerRecord[String, String]): F[Unit] = {
-    for {
-      logger <- Slf4jLogger.create[F]
-      _ <- logger.info(s"Processing record on partition ${record.partition} with offset=${record.offset}. Key=${record.key}. Value=${record.value}")
-    } yield ()
-  }
+  private implicit val logger: Logger[F] = LoggerFactory[F].getLogger
+
+  def handle(record: ConsumerRecord[String, String]): F[Unit] =
+    info"Processing record on partition ${record.partition} with offset=${record.offset}. Key=${record.key}. Value=${record.value}"
 }

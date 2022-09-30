@@ -10,7 +10,7 @@ import org.typelevel.log4cats.{Logger, LoggerFactory}
 
 class PersonService[F[_] : LoggerFactory : FlatMap](repository: PersonRepository[F]) {
 
-  implicit val logger: Logger[F] = LoggerFactory[F].getLogger
+  private implicit val logger: Logger[F] = LoggerFactory[F].getLogger
 
   def findAll(): F[Vector[Person]] =
     for {
