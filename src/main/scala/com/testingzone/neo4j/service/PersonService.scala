@@ -6,16 +6,18 @@ import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.testingzone.neo4j.domain.Person
 import com.testingzone.neo4j.repository.PersonRepository
+import com.testingzone.neo4j.trace.Trace
 import org.typelevel.log4cats.{Logger, LoggerFactory}
 
-class PersonService[F[_] : LoggerFactory : FlatMap](repository: PersonRepository[F]) {
+class PersonService[F[_] : Trace : LoggerFactory : FlatMap](repository: PersonRepository[F]) {
 
   private implicit val logger: Logger[F] = LoggerFactory[F].getLogger
 
   def findAll(): F[Vector[Person]] =
     for {
-      _ <- logger.info("Find all persons...")
+      traceId <- Trace[F].traceId
+      _ <- logger.info(s"${traceId.value}. Find all persons...")
       result <- repository.findAll()
-      _ <- logger.info(show"Result: [$result]")
+      _ <- logger.info(show"${traceId.value}. Result: [$result]")
     } yield result
 }
