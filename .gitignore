@@ -41,3 +41,4 @@ native
 # pants
 .pants.d
 .pids
+dist

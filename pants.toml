@@ -1,6 +1,7 @@
 [GLOBAL]
 pants_version = "2.13.0"
 backend_packages = [
+    "pants.backend.docker",
     "pants.backend.experimental.scala",
     "pants.backend.experimental.scala.lint.scalafmt",
 ]

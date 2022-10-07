@@ -19,3 +19,9 @@ deploy_jar(
         ":neo4j",
     ],
 )
+
+docker_image(
+  name="neo4j-service",
+  dependencies=[":bin"],
+  source="Dockerfile"
+)
