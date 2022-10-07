@@ -23,12 +23,10 @@ jvm-default = "2.13.8"
 # Resolve-global `scalac` plugins, which are defined as `scalac_plugin` targets.
 jvm-default = "bm4,kind-projector"
 
-[scalac]
-args = [
-    "-Ylog-classpath",
-]
-
 [scala-infer]
+imports = false
+package_objects = false
+consumed_types = false
 force_add_siblings_as_dependencies = false
 
 [anonymous-telemetry]
