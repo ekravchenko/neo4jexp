@@ -1,0 +1,20 @@
+scala_sources(
+    sources=["**/*.scala"],
+    dependencies=[
+        "src/main/scala/com/testingzone/dependencies:log",
+        "src/main/scala/com/testingzone/dependencies:cats",
+        "src/main/scala/com/testingzone/dependencies:kafka",
+        "src/main/scala/com/testingzone/dependencies:neotypes",
+        "src/main/scala/com/testingzone/dependencies:tapir-http4s",
+        "src/main/scala/com/testingzone/infrastructure/trace:trace",
+    ],
+)
+
+deploy_jar(
+    name="bin",
+    main="com.testingzone.services.neo4j.Main",
+    dependencies=[
+        "src/main/resources:logback",
+        ":neo4j",
+    ],
+)

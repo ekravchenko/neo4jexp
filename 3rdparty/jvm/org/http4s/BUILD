@@ -1,0 +1,39 @@
+jvm_artifact(
+    name="http4s-core",
+    group="org.http4s",
+    artifact="http4s-core_2.13",
+    version="0.23.16",
+    packages=["org.http4s.**"],
+    excludes=[
+        "co.fs2:fs2-core_2.13",
+        "co.fs2:fs2-io_2.13",
+        "org.typelevel:cats-core_2.13",
+        "org.typelevel:cats-effect-kernel_2.13",
+        "org.typelevel:cats-effect-std_2.13",
+        "org.typelevel:cats-effect_2.13",
+        "org.slf4j:slf4j-api",
+    ],
+)
+
+jvm_artifact(
+    name="http4s-server",
+    group="org.http4s",
+    artifact="http4s-server_2.13",
+    version="0.23.16",
+    packages=["org.http4s.server.**"],
+    excludes=[
+        "org.http4s:http4s-core",
+    ],
+)
+
+jvm_artifact(
+    name="http4s-blaze-server",
+    group="org.http4s",
+    artifact="http4s-blaze-server_2.13",
+    version="0.23.12",
+    packages=["org.http4s.server.blaze.**","org.http4s.blaze.server.**"],
+    excludes=[
+        "org.http4s:http4s-core_2.13",
+        "org.http4s:http4s-server_2.13",
+    ],
+)

@@ -1,0 +1,39 @@
+jvm_artifact(
+    name="cats-core",
+    group="org.typelevel",
+    artifact="cats-core_2.13",
+    version="2.8.0",
+    packages=["cats.**"],
+)
+
+jvm_artifact(
+    name="cats-effect",
+    group="org.typelevel",
+    artifact="cats-effect_2.13",
+    version="3.3.14",
+    packages=["cats.effect.**"],
+    excludes=[
+        "org.typelevel:cats-core_2.13",
+    ],
+)
+
+jvm_artifact(
+    name="log4cats-slf4j",
+    group="org.typelevel",
+    artifact="log4cats-slf4j_2.13",
+    version="2.5.0",
+    packages=["org.typelevel.log4cats.**"],
+    excludes=[
+        "org.typelevel:cats-core_2.13",
+        "org.typelevel:cats-effect_2.13",
+        "org.typelevel:cats-effect-std_2.13",
+        "org.slf4j:slf4j-api",
+    ],
+)
+
+jvm_artifact(
+    name="kind-projector",
+    group="org.typelevel",
+    artifact="kind-projector_2.13.8",
+    version="0.13.2",
+)

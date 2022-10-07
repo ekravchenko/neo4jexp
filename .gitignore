@@ -37,3 +37,7 @@ target/
 
 # graalvm
 native
+
+# pants
+.pants.d
+.pids

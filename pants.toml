@@ -1,0 +1,35 @@
+[GLOBAL]
+pants_version = "2.13.0"
+backend_packages = [
+    "pants.backend.experimental.scala",
+    "pants.backend.experimental.scala.lint.scalafmt",
+]
+
+# Opt in to future behaviors that will become the default in Pants v2.14.
+# These directives should be removed in Pants v2.14.x and higher.
+use_deprecated_directory_cli_args_semantics = false
+use_deprecated_pex_binary_run_semantics = false
+
+[source]
+root_patterns = [
+    "/src/main/scala",
+    "/src/main/resources",
+]
+
+[scala.version_for_resolve]
+jvm-default = "2.13.8"
+
+[scalac.plugins_for_resolve]
+# Resolve-global `scalac` plugins, which are defined as `scalac_plugin` targets.
+jvm-default = "bm4,kind-projector"
+
+[scalac]
+args = [
+    "-Ylog-classpath",
+]
+
+[scala-infer]
+force_add_siblings_as_dependencies = false
+
+[anonymous-telemetry]
+enabled = false

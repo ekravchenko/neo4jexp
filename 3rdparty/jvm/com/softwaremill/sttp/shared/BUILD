@@ -1,0 +1,11 @@
+jvm_artifact(
+    name="fs2",
+    group="com.softwaremill.sttp.shared",
+    artifact="fs2_2.13",
+    version="1.3.8",
+    packages=["sttp.capabilities.fs2.**"],
+    excludes=[
+        "co.fs2:fs2-io_2.13",
+        "org.scala-lang:scala-library",
+    ],
+)

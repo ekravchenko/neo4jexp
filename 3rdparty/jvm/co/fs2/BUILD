@@ -1,0 +1,24 @@
+jvm_artifact(
+    name="fs2-core",
+    group="co.fs2",
+    artifact="fs2-core_2.13",
+    version="3.3.0",
+    packages=["fs2.**"],
+    excludes=[
+        "org.typelevel:cats-core_2.13",
+        "org.typelevel:cats-effect_2.13",
+    ],
+)
+
+jvm_artifact(
+    name="fs2-io",
+    group="co.fs2",
+    artifact="fs2-io_2.13",
+    version="3.3.0",
+    packages=["fs2.io.**"],
+    excludes=[
+        "org.typelevel:cats-core_2.13",
+        "org.typelevel:cats-effect_2.13",
+        "org.typelevel:cats-effect-kernel_2.13",
+    ],
+)

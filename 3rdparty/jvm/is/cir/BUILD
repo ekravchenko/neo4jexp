@@ -1,0 +1,10 @@
+jvm_artifact(
+    name="ciris",
+    group="is.cir",
+    artifact="ciris_2.13",
+    version="2.4.0",
+    packages=["ciris.**"],
+    excludes=[
+        "org.typelevel:cats-effect-kernel_2.13",
+    ],
+)

@@ -1,0 +1,10 @@
+jvm_artifact(
+    name="core",
+    group="com.softwaremill.sttp.model",
+    artifact="core_2.13",
+    version="1.5.2",
+    packages=["sttp.model.**"],
+    excludes=[
+        "org.scala-lang:scala-library",
+    ],
+)
