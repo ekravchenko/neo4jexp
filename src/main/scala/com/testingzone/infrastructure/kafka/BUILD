@@ -1,6 +1,6 @@
 scala_sources(
     sources=['**/*.scala'],
     dependencies=[
-        "src/main/scala/com/testingzone/dependencies:kafka",
+        "src/main/scala/com/testingzone/infrastructure/depends:kafka",
     ]
 )

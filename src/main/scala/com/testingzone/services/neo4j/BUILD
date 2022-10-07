@@ -1,12 +1,12 @@
 scala_sources(
     sources=["**/*.scala"],
     dependencies=[
-        "src/main/scala/com/testingzone/dependencies:log",
-        "src/main/scala/com/testingzone/dependencies:config",
-        "src/main/scala/com/testingzone/dependencies:cats",
-        "src/main/scala/com/testingzone/dependencies:kafka",
-        "src/main/scala/com/testingzone/dependencies:neotypes",
-        "src/main/scala/com/testingzone/dependencies:tapir-http4s",
+        "src/main/scala/com/testingzone/infrastructure/depends:log",
+        "src/main/scala/com/testingzone/infrastructure/depends:config",
+        "src/main/scala/com/testingzone/infrastructure/depends:cats",
+        "src/main/scala/com/testingzone/infrastructure/depends:kafka",
+        "src/main/scala/com/testingzone/infrastructure/depends:neotypes",
+        "src/main/scala/com/testingzone/infrastructure/depends:tapir-http4s",
         "src/main/scala/com/testingzone/infrastructure/trace:trace",
     ],
 )
