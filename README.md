@@ -8,6 +8,8 @@ Use latest technologies in Scala stack to work with neo4j
 - [Tapir](https://tapir.softwaremill.com/en/latest/server/http4s.html) - describe HTTP API endpoints as immutable Scala values
 - [Http4s](https://http4s.org/) - functional HTTP server for scala
 - [fs2-kafka](https://fd4s.github.io/fs2-kafka/docs/consumers) - functional Kafka consumers & producers
+- [pantsbuild v2](https://www.pantsbuild.org/docs/jvm-overview) - build tool for monorepos
+- TraceId in IOLocal with propagation accross http & kafka
 
 _Stack above is fully compliant with GraalVM native compilation_
 
