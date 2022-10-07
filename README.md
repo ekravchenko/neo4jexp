@@ -35,7 +35,7 @@ docker build -t neo4jexp .
 ```
 To run container use command below
 ```
-docker run -d -p 8090:8090 \
+docker run -d -p 8080:8090 \
         -e neo4j_host=neo4j \
         -e neo4j_port=7687 \
         -e neo4j_user=neo4j \
@@ -43,8 +43,8 @@ docker run -d -p 8090:8090 \
         -e kafka_host=kafka \
         -e kafka_port=9092 \
         --network=neo4jexp_default \
-        --memory=20m \
-        --name neo4jexp neo4jexp
+        --memory=100m \
+        --name jvm neo4j-jvm
 ```
 Please note that `--memory=20m` forces Docker container to use `20 megabytes` only. This is done on purpose - it shows
 that native application inside container can start successfully. 

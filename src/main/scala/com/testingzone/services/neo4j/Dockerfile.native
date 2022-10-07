@@ -1,0 +1,12 @@
+FROM ghcr.io/graalvm/native-image:22.2.0 as builder
+COPY src.main.scala.com.testingzone.services.neo4j/bin.jar app.jar
+COPY src/main/resources/reflect-config.json reflect-config.json
+COPY src/main/resources/logback.xml logback.xml
+RUN native-image -jar app.jar \
+                  --no-fallback \
+                  -H:IncludeResources=logback.xml \
+                  -H:ReflectionConfigurationFiles=reflect-config.json
+
+FROM redhat/ubi8-minimal:latest
+COPY --from=builder /app/app native
+ENTRYPOINT ["./native"]
