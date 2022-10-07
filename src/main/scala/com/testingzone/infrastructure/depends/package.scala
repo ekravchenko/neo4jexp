@@ -1,4 +1,3 @@
 package com.testingzone.infrastructure
 
-package object depends {
-}
+package object depends
