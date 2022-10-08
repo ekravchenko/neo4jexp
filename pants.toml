@@ -15,6 +15,7 @@ use_deprecated_pex_binary_run_semantics = false
 root_patterns = [
     "/src/main/scala",
     "/src/main/resources",
+    "/src/main/docker",
 ]
 
 [scala.version_for_resolve]
