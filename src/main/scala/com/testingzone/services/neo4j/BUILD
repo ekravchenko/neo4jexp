@@ -3,7 +3,7 @@ scala_sources(
     dependencies=[
         "src/main/scala/com/testingzone/infrastructure/depends:log",
         "src/main/scala/com/testingzone/infrastructure/depends:config",
-        "src/main/scala/com/testingzone/infrastructure/depends:cats",
+        "src/main/scala/com/testingzone/infrastructure/depends:cats-effect",
         "src/main/scala/com/testingzone/infrastructure/depends:kafka",
         "src/main/scala/com/testingzone/infrastructure/depends:neotypes",
         "src/main/scala/com/testingzone/infrastructure/depends:tapir-http4s",
