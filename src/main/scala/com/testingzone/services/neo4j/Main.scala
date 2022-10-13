@@ -51,7 +51,7 @@ object Main extends IOApp {
         kafkaEndpoint.postToKafkaEndpoint,
         traceEndpoint.postSimpleTraceEndpoint
       ))
-      _ <- BlazeServerBuilder[F]
+      server = BlazeServerBuilder[F]
         .withExecutionContext(scala.concurrent.ExecutionContext.Implicits.global)
         .bindHttp(httpConfig.port, httpConfig.host)
         .withHttpApp(Router("/" -> routes).orNotFound)
@@ -63,10 +63,12 @@ object Main extends IOApp {
       handler = KafkaTraceableHandler[F, String, String](new SimpleEventHandler[F](traceService))
       _ <- Resource.eval(consumer.subscribeTo(kafkaConfig.testTopic))
       _ <- Resource.eval(logger.info(s"Subscribed to Kafka topic [${kafkaConfig.testTopic}]"))
-      done <- Resource.eval(consumer.stream
+      stream = consumer.stream
         .mapAsync(20)(msg => handler.handle(msg.record).as(msg.offset))
         .through(commitBatchWithin(kafkaConfig.offsetConfig.batchSize, kafkaConfig.offsetConfig.interval))
         .compile
-        .drain)
+        .resource
+        .drain
+      done <- server.both(stream)
     } yield done).use_.as(ExitCode.Success)
 }
